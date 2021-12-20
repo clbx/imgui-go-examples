@@ -2,6 +2,7 @@ package demo
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/inkyblackness/imgui-go/v4"
 )
@@ -222,6 +223,31 @@ func (widgets *widgets) show() {
 		imgui.SameLine()
 		if imgui.RadioButton("radio c", widgets.radio == 2) {
 			widgets.radio = 2
+		}
+
+		colors := [7]imgui.Vec4{
+			imgui.Vec4{153.0 / 255.0, 61.0 / 255.0, 61.0 / 255.0, 1},
+			imgui.Vec4{153.0 / 255.0, 117.0 / 255.0, 61.0 / 255.0, 1},
+			imgui.Vec4{133.0 / 255.0, 153.0 / 255.0, 61.0 / 255.0, 1},
+			imgui.Vec4{78.0 / 255.0, 153.0 / 255.0, 61.0 / 255.0, 1},
+			imgui.Vec4{61.0 / 255.0, 153.0 / 255.0, 101.0 / 255.0, 1},
+			imgui.Vec4{61.0 / 255.0, 150.0 / 255.0, 153.0 / 255.0, 1},
+			imgui.Vec4{61.0 / 255.0, 94.0 / 255.0, 153.0 / 255.0, 1},
+		}
+		for i := 0; i < 7; i++ {
+			if i > 0 {
+				imgui.SameLine()
+			}
+
+			imgui.PushID(strconv.Itoa(i))
+			//imgui-go does not seem to have imcolor functions so all color must be passed in a RGBA
+
+			imgui.PushStyleColor(imgui.StyleColorButton, colors[i])
+			imgui.PushStyleColor(imgui.StyleColorButtonHovered, colors[i])
+			imgui.PushStyleColor(imgui.StyleColorButtonActive, colors[i])
+			imgui.Button("Click")
+			imgui.PopStyleColorV(3)
+			imgui.PopID()
 		}
 
 		imgui.TreePop()
